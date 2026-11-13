@@ -1,0 +1,15 @@
+# data, caches, checkpoints and results are not part of the repository
+data/
+outputs/
+experiments/census/data/
+experiments/census/cache/
+experiments/census/records*/
+experiments/camelyon_slide_split/cache/
+experiments/exact_site_mmd/windows/
+*.npz
+*.npy
+*.pt
+*.jsonl
+__pycache__/
+*.pyc
+*.egg-info/

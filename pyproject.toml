@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "encmonitor"
+version = "0.1.0"
+description = "Cancellation-aware encrypted cross-silo drift monitoring"
+license = {text = "MIT"}
+authors = [
+  {name = "Mahwish Naz"},
+  {name = "Hojong Choi"},
+  {name = "Hyunyoung Oh"},
+]
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=2.0",
+  "scipy>=1.12",
+  "pandas>=2.0",
+  "scikit-learn>=1.4",
+  "PyYAML>=6.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["encmonitor*"]
+

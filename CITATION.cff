@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite it as below."
+title: "EncMonitor: Encrypted Cross-Silo Drift Monitoring beyond Pooled Statistics"
+type: software
+authors:
+  - family-names: Naz
+    given-names: Mahwish
+  - family-names: Choi
+    given-names: Hojong
+  - family-names: Oh
+    given-names: Hyunyoung
+version: "0.1.0"
+license: MIT
+# DOI: PLACEHOLDER -- to be filled in when the Zenodo record is created (no DOI exists yet).
+# doi: "10.5281/zenodo.XXXXXXX"

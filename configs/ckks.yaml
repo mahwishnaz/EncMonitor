@@ -1,0 +1,35 @@
+# CKKS validation: decision replay and cost grid. Fixed 2026-09-30 before any replay result.
+
+ckks:                          # primary parameter profile
+  multiplicative_depth: 2
+  scaling_mod_size: 50
+  security_128: true           # HEStd_128_classic; bootstrapping disabled
+
+# CKKS decision replay: ~200 selected windows per dataset across clean and shifted conditions.
+# Windows are re-derived from the main-experiment caches with the same window logic and seeds (the
+# export script checks every exported window against the saved records); never regenerated independently.
+replay:
+  partition_seeds: [2026, 2027, 2028, 2029, 2030]
+  clean_windows_per_seed: 20        # first 20 held-out clean windows
+  windows_per_condition_per_seed: 5 # first 5 windows of each representative condition
+  conditions:                       # the representative conditions of configs/ablation.yaml
+    mnist:   [vector2__opposing, contrast0.35__mixed, label_prior0.2__opposing, contrast0.35__coherent]
+    cifar10: [vector2__opposing, contrast0.35__opposing, label_prior0.2__opposing, contrast0.35__coherent]
+  threshold_quantiles: [0.95, 0.975]  # thresholds from each seed's clean calibration windows
+  repeats: 1                          # replay decisions once; timing repeats come from the cost grid
+
+# CKKS cost grid: 2 S x 4 m x 4 geometries x 10 repeats; context reused per profile.
+cost_grid:
+  sites: [5, 10]
+  rff_dim: [32, 64, 128, 256]
+  geometries: [single, coherent, opposing, mixed]
+  repeats: 10
+  severity: 0.5
+  seed: 2026
+
+# numerical acceptance tests
+gate:
+  max_abs_error: 1.0e-3            # |HE - plaintext| for D_mix, D_site, H and every A_s
+  max_identity_residual: 1.0e-3    # |(D_site - D_mix) - H| after decryption
+  min_decision_agreement: 0.995    # pooled, site-energy, heterogeneity, global alert, hidden cancellation
+  min_attribution_agreement: 0.995 # same top-1 site and same top-k set

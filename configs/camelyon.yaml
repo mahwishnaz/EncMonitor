@@ -1,0 +1,55 @@
+# Camelyon17-WILDS: five real hospitals as five sites.
+# Same protocol and settings as configs/main.yaml (MNIST / CIFAR-10); only the data,
+# the site definition and the shift families differ. Fixed before any Camelyon result was seen.
+
+sites: 5                          # site s = hospital s (0, 3, 4 in the model's training split; 1, 2 unseen)
+partition_seeds: [2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035, 2036, 2037, 2038, 2039, 2040, 2041, 2042, 2043, 2044, 2045]   # 2026-2030 submitted run; 2031-2045 added in revision 1
+replay_partition_seeds: [2026, 2027, 2028, 2029, 2030]   # CKKS replay (script 35) stays on the original five seeds
+pool_per_hospital: 5000           # held-out patches per hospital and seed (hospital 0 has 6,011)
+baseline_fraction: 0.5            # 2,500 reference + 2,500 monitoring patches per site
+window_size: 250
+rff_dim: 64
+clip_radius: 8.0
+bandwidth_multiplier: 1.0
+rff_seed: 1729
+weights: uniform
+calibration_windows: 500
+heldout_windows: 200
+windows_per_condition: 50
+threshold_quantiles: [0.95, 0.975]
+label_prior_target: 1             # tumor
+
+exact_mmd:
+  enabled: true
+  bandwidth: rff
+
+geometries:
+  single:   [1, 0, 0, 0, 0]
+  coherent: [1, 1, 0, 0, 0]
+  opposing: [1, -1, 0, 0, 0]
+  mixed:    [1, -0.5, 0.75, 0, 0]
+
+# Patient exchange: a site receives a fraction q of its patches from another hospital's
+# monitoring pool (referrals, slides scanned elsewhere). No image is modified.
+# Value = {receiving site: source hospital}.
+exchange_sources:
+  single:   {0: 2}
+  coherent: {0: 2, 1: 2}
+  opposing: {0: 1, 1: 0}
+
+families:
+  stain:       {kind: image,       severities: [0.10, 0.20, 0.35, 0.50], geometries: [single, coherent, opposing, mixed]}   # haematoxylin intensity (HED)
+  brightness:  {kind: image,       severities: [0.10, 0.20, 0.35, 0.50], geometries: [single, coherent, opposing, mixed]}
+  contrast:    {kind: image,       severities: [0.10, 0.20, 0.35, 0.50], geometries: [single, coherent, opposing, mixed]}
+  blur:        {kind: image,       severities: [0.3, 0.6, 1.0, 1.5],     geometries: [single, coherent]}                     # scanner focus; no negative direction
+  label_prior: {kind: label_prior, severities: [0.10, 0.20, 0.35, 0.50], geometries: [single, coherent, opposing, mixed]}   # tumor ratio
+  exchange:    {kind: exchange,    severities: [0.10, 0.20, 0.35, 0.50], geometries: [single, coherent, opposing]}
+  vector:      {kind: vector,      severities: [0.25, 0.5, 1.0, 2.0],    geometries: [single, coherent, opposing, mixed]}   # controlled +v/-v
+
+realistic_families: [stain, brightness, contrast, blur, label_prior, exchange]
+
+gate:                             # same rule as configs/main.yaml
+  max_pooled_rate: 0.5
+  min_dual_rate: 0.8
+  geometries: [opposing, mixed]
+  min_families: 2

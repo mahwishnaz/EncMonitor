@@ -1,0 +1,49 @@
+# Main experiment (MNIST, CIFAR-10). Fixed before any result was seen.
+# All protocol settings are repeated here so that every run is self-describing.
+
+sites: 5
+dirichlet_alpha: 0.5
+baseline_fraction: 0.5
+partition_seeds: [2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035, 2036, 2037, 2038, 2039, 2040, 2041, 2042, 2043, 2044, 2045]   # 2026-2030 submitted run; 2031-2045 added in revision 1
+window_size: 250
+rff_dim: 64
+clip_radius: 8.0
+bandwidth_multiplier: 1.0
+rff_seed: 1729
+extract_seed: 20260818            # default seed of 04_extract_embeddings.py (per-site image-noise seed)
+weights: uniform
+calibration_windows: 500
+heldout_windows: 200              # independent clean run for FPR
+windows_per_condition: 50         # per condition and seed
+threshold_quantiles: [0.95, 0.975]  # 0.95 primary; 0.975 sensitivity
+
+exact_mmd:                        # centralized exact-kernel baseline, biased RBF MMD^2,
+  enabled: true                   # pooled current window vs pooled reference sample of equal size,
+  bandwidth: rff                  # same standardization/clipping and the same bandwidth as the RFF map
+
+geometries:                       # site 0..4; values = direction x severity scale
+  single:   [1, 0, 0, 0, 0]
+  coherent: [1, 1, 0, 0, 0]
+  opposing: [1, -1, 0, 0, 0]
+  mixed:    [1, -0.5, 0.75, 0, 0]
+
+families:
+  rotation:    {kind: image, severities: [5, 10, 20, 30],           geometries: [single, coherent, opposing, mixed]}
+  brightness:  {kind: image, severities: [0.10, 0.20, 0.35, 0.50],  geometries: [single, coherent, opposing, mixed]}
+  contrast:    {kind: image, severities: [0.10, 0.20, 0.35, 0.50],  geometries: [single, coherent, opposing, mixed]}
+  blur:        {kind: image, severities: [0.3, 0.6, 1.0, 1.5],      geometries: [single, coherent]}   # no natural negative direction
+  noise:       {kind: image, severities: [0.02, 0.05, 0.10, 0.20],  geometries: [single, coherent]}   # no natural negative direction
+  label_prior: {kind: label_prior, severities: [0.10, 0.20, 0.35, 0.50], geometries: [single, coherent, opposing, mixed]}
+  vector:      {kind: vector, severities: [0.25, 0.5, 1.0, 2.0],    geometries: [single, coherent, opposing, mixed]}  # controlled +v/-v
+
+realistic_families: [rotation, brightness, contrast, blur, noise, label_prior]   # vector = mechanism control only
+
+# Cancellation criterion, fixed before results: a family "reproduces the cancellation finding" on a dataset
+# if, for at least one severity, the opposing or mixed geometry has pooled (D_mix) alert rate <= 0.5
+# while the dual statistic (D_site or H) alert rate >= 0.8, at the primary 95% thresholds.
+# The criterion is met if at least two realistic families reproduce it (reported per dataset and overall).
+gate:
+  max_pooled_rate: 0.5
+  min_dual_rate: 0.8
+  geometries: [opposing, mixed]
+  min_families: 2

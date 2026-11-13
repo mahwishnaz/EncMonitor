@@ -1,0 +1,69 @@
+# Ablations: core grid, layer/bandwidth, reference and weights.
+# Fixed on 2026-09-29, after the main experiment and before any ablation result was seen.
+# Question: is the cancellation finding confined to one arbitrary hyperparameter setting?
+
+partition_seeds: [2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035, 2036, 2037, 2038, 2039, 2040, 2041, 2042, 2043, 2044, 2045]   # 2026-2030 submitted run; 2031-2045 added in revision 1
+calibration_windows: 500
+heldout_windows: 200
+windows_per_condition: 50
+clip_radius: 8.0
+rff_seed: 1729
+extract_seed: 20260818
+dirichlet_alpha: 0.5
+baseline_fraction: 0.5
+
+# Primary setting (identical to the main experiment). The runner checks that this setting
+# reproduces the main-experiment records exactly.
+base: {sites: 5, layer: penultimate, rff_dim: 64, window_size: 250, bandwidth_multiplier: 1.0,
+       baseline: site, weights: uniform}
+
+# 4 representative conditions per dataset, chosen from the main experiment:
+# the controlled vector case, the two strongest natural cancellation cases, and one coherent control.
+conditions:
+  mnist:   [vector2__opposing, contrast0.35__mixed, label_prior0.2__opposing, contrast0.35__coherent]
+  cifar10: [vector2__opposing, contrast0.35__opposing, label_prior0.2__opposing, contrast0.35__coherent]
+natural_cancellation_conditions:
+  mnist:   [contrast0.35__mixed, label_prior0.2__opposing]
+  cifar10: [contrast0.35__opposing, label_prior0.2__opposing]
+
+# Embedding caches. S5/penultimate re-uses the main-experiment cache; the others are built by 17_build_ablation_cache.py.
+# Layers: early = spatially averaged conv features (LeNet: output of `features`, 64-D;
+#         ResNet-18: output of layer3, 256-D); penultimate = main representation (128-D / 512-D);
+#         logits = final 10-D output.
+caches:
+  S5_penultimate:  {sites: 5,  layer: penultimate, dir: "outputs/main/{dataset}"}
+  S10_penultimate: {sites: 10, layer: penultimate, dir: "outputs/ablation/cache/{dataset}/S10_penultimate"}
+  S5_early:        {sites: 5,  layer: early,       dir: "outputs/ablation/cache/{dataset}/S5_early"}
+  S5_logits:       {sites: 5,  layer: logits,      dir: "outputs/ablation/cache/{dataset}/S5_logits"}
+
+# Ablation axes. Each setting changes the base setting only in the listed keys.
+axes:
+  core:            # core ablation: 2 S x 4 m x 3 n (full factorial)
+    sites: [5, 10]
+    rff_dim: [32, 64, 128, 256]
+    window_size: [100, 250, 500]
+  layer_bandwidth: # layer/bandwidth ablation: 3 layers x 3 bandwidths
+    layer: [early, penultimate, logits]
+    bandwidth_multiplier: [0.5, 1.0, 2.0]
+  baseline:        # site-specific vs one global baseline
+    baseline: [site, global]
+  weights:         # uniform fixed vs traffic-proportional weights
+    weights: [uniform, traffic]
+
+# RFF fidelity: centralized exact-kernel MMD is also computed on the same windows for the
+# m-axis at S=5, n=250 (rff_dim 32/64/128/256), to measure how closely D_mix tracks the exact kernel.
+exact_mmd_for: {sites: 5, window_size: 250, layer: penultimate, bandwidth_multiplier: 1.0, baseline: site, weights: uniform}
+
+# Robustness criterion (is the finding confined to one arbitrary hyperparameter setting?),
+# fixed before results. For each dataset and each hyperparameter axis listed in gate.axes, with the other factors at base:
+# an axis value "reproduces" the finding if at least one natural cancellation condition has
+# pooled alert rate <= 0.5 and dual (D_site or H) alert rate >= 0.8 at 95% thresholds (the rule of configs/main.yaml).
+# An axis passes if >= 2 of its values reproduce. The criterion is met if every axis passes on both datasets;
+# any failing axis is reported as a boundary of the claim, not hidden.
+# The baseline and weights ablations are design comparisons, not hyperparameters: they are reported
+# (a global baseline is EXPECTED to perform worse) but are not part of the pass rule.
+gate:
+  axes: [sites, rff_dim, window_size, layer, bandwidth_multiplier]
+  max_pooled_rate: 0.5
+  min_dual_rate: 0.8
+  min_values_per_axis: 2
