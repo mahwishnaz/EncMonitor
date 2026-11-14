@@ -3,7 +3,7 @@
 # the site definition and the shift families differ. Fixed before any Camelyon result was seen.
 
 sites: 5                          # site s = hospital s (0, 3, 4 in the model's training split; 1, 2 unseen)
-partition_seeds: [2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035, 2036, 2037, 2038, 2039, 2040, 2041, 2042, 2043, 2044, 2045]   # 2026-2030 submitted run; 2031-2045 added in revision 1
+partition_seeds: [2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035, 2036, 2037, 2038, 2039, 2040, 2041, 2042, 2043, 2044, 2045]   # partition seeds 2031-2045 extend the original five
 replay_partition_seeds: [2026, 2027, 2028, 2029, 2030]   # CKKS replay (script 35) stays on the original five seeds
 pool_per_hospital: 5000           # held-out patches per hospital and seed (hospital 0 has 6,011)
 baseline_fraction: 0.5            # 2,500 reference + 2,500 monitoring patches per site

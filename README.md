@@ -23,8 +23,7 @@ Install the package from this folder with `pip install -e .`. GPU jobs use one G
 ## Layout
 - `encmonitor/`: library (RFF map, statistics, thresholds, CKKS circuit, network protocol).
 - `configs/`: `main.yaml` (MNIST, CIFAR-10), `camelyon.yaml`, `census.yaml` (partition seeds of the census
-  experiment), `ablation.yaml`, `ckks.yaml`. The settings were fixed before the results were seen; the partition
-  seeds 2031-2045 were added in the revision.
+  experiment), `ablation.yaml`, `ckks.yaml`. The partition seeds 2031-2045 extend the original five.
 - `scripts/`: numbered steps of the main pipeline.
 - `experiments/`: further experiments and analyses of the saved records (shared code in `experiments/common/`).
 
@@ -42,5 +41,13 @@ Install the package from this folder with `pip install -e .`. GPU jobs use one G
 6. Census data: `experiments/census/` (`download.py`, `model.py`, `windows.py`, `analyze.py`).
 7. Further analyses of the saved records: the other folders in `experiments/`. Each script states its usage in
    its docstring.
+8. Tables and analyses of the reported numbers (all partition seeds): `scripts/run_seeds.sh` runs the
+   experiments for every seed; `analysis/` holds the analyses (weighted variants, clipping, patient split,
+   falsified residual, streams, worked example, cost projection; shared code in `analysis/shared.py`) and
+   `analysis/tables/make_all_tables.py` regenerates every table into `outputs/tables/`. Results of the
+   analyses go to `outputs/analysis/`.
+9. Reproduction check of partition seed 2026: `scripts/reproduce_seed2026.sh`, then
+   `scripts/compare_seed2026.py` (identical window indices, statistics within a relative difference of 1e-6,
+   identical alert decisions).
 
 Each script reads the outputs of the earlier steps from `outputs/` (or from its own folder) and writes its own.

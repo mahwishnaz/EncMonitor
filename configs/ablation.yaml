@@ -2,7 +2,7 @@
 # Fixed on 2026-09-29, after the main experiment and before any ablation result was seen.
 # Question: is the cancellation finding confined to one arbitrary hyperparameter setting?
 
-partition_seeds: [2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035, 2036, 2037, 2038, 2039, 2040, 2041, 2042, 2043, 2044, 2045]   # 2026-2030 submitted run; 2031-2045 added in revision 1
+partition_seeds: [2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035, 2036, 2037, 2038, 2039, 2040, 2041, 2042, 2043, 2044, 2045]   # partition seeds 2031-2045 extend the original five
 calibration_windows: 500
 heldout_windows: 200
 windows_per_condition: 50

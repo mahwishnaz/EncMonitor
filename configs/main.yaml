@@ -4,7 +4,7 @@
 sites: 5
 dirichlet_alpha: 0.5
 baseline_fraction: 0.5
-partition_seeds: [2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035, 2036, 2037, 2038, 2039, 2040, 2041, 2042, 2043, 2044, 2045]   # 2026-2030 submitted run; 2031-2045 added in revision 1
+partition_seeds: [2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035, 2036, 2037, 2038, 2039, 2040, 2041, 2042, 2043, 2044, 2045]   # partition seeds 2031-2045 extend the original five
 window_size: 250
 rff_dim: 64
 clip_radius: 8.0

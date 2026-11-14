@@ -70,7 +70,7 @@ def main() -> int:
     cfg = yaml.safe_load(open(ROOT / args.config))
     seeds = [int(s) for s in args.seeds.split(",") if s.strip()] or [int(s) for s in cfg["partition_seeds"]]
     if args.device != "cpu" and not torch.cuda.is_available():
-        raise SystemExit("CUDA is not available -- stop here (see Step 3.2). Use --device cpu only on purpose.")
+        raise SystemExit("CUDA is not available -- stop here. Use --device cpu only on purpose.")
     device = args.device
     S, m = int(cfg["sites"]), int(cfg["rff_dim"])
 
