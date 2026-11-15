@@ -16,9 +16,9 @@ from the pool of real MNIST clean calibration residuals (seeds 2026-2030, all si
 shift Δ; z = (mean shifted − mean clean)/SD clean for D_mix and D_site; ratio vs k/sqrt(S).
 Writes outputs/analysis/cost/{cost.csv, cost.json, ksqrt.csv}.
 Usage: python analysis/cost_projection.py   (CPU only; time it on an otherwise idle machine)
-Note: the depth-0 CKKS bit context of private_localany/ckks.py (first modulus 30 bits, scaling 25 bits) decodes the
-alert count correctly only up to 15 (checked for 0..50); larger counts wrap. `count_decrypted_exactly` records this
-per S (random alert bits, about S/2 alerts per window). BGV (t = 65537) is exact.
+Note: the depth-0 CKKS bit context of private_localany/ckks.py (first modulus 35 bits, scaling 25 bits) decodes the
+alert count exactly for every S used here; `count_decrypted_exactly` records this per S (random alert bits, about
+S/2 alerts per window). BGV (t = 65537) is exact.
 """
 from __future__ import annotations
 

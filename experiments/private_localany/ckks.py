@@ -88,9 +88,13 @@ def dmix_only(backend, cts, alpha, width):
 
 
 def bit_context(kind: str):
+    # CKKS depth 0: first modulus 35 bits, scaling 25 bits, so decoded values lie in about [-2^9, 2^9).
+    # The count of alert bits was checked to be exact for every count 0..64 at S = 5, 10, 16, 20, 50 and 64
+    # (error below 1e-3). Ring dimension 4,096 and ciphertext size are the same as with a 30-bit first
+    # modulus, which wraps at 16 alerting sites.
     if kind == "ckks_d0":
         p = fhe.CCParamsCKKSRNS()
-        p.SetMultiplicativeDepth(0); p.SetScalingModSize(25); p.SetFirstModSize(30); p.SetBatchSize(1)
+        p.SetMultiplicativeDepth(0); p.SetScalingModSize(25); p.SetFirstModSize(35); p.SetBatchSize(1)
         p.SetScalingTechnique(fhe.ScalingTechnique.FLEXIBLEAUTO)
     else:   # bgv_t65537_d0
         p = fhe.CCParamsBGVRNS()
