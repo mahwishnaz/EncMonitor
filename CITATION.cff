@@ -5,11 +5,14 @@ type: software
 authors:
   - family-names: Naz
     given-names: Mahwish
+    affiliation: "Gachon University"
   - family-names: Choi
     given-names: Hojong
+    affiliation: "Gachon University"
   - family-names: Oh
     given-names: Hyunyoung
+    affiliation: "Gachon University"
 version: "0.1.0"
 license: MIT
-# DOI: PLACEHOLDER -- to be filled in when the Zenodo record is created (no DOI exists yet).
-# doi: "10.5281/zenodo.XXXXXXX"
+doi: "10.5281/zenodo.24358726"
+repository-code: "https://github.com/mahwishnaz/EncMonitor"
