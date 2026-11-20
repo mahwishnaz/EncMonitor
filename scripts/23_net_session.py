@@ -541,7 +541,7 @@ def main() -> int:
     ap.add_argument("--sites", type=int, default=5, help="synthetic sessions only")
     ap.add_argument("--m", type=int, default=64, help="synthetic sessions only")
     ap.add_argument("--timeout", type=float, default=120.0)
-    ap.add_argument("--faults", action="store_true", help="run the §7.6 hard-error tests against the live server")
+    ap.add_argument("--faults", action="store_true", help="run the hard-error tests against the live server")
     ap.add_argument("--remote-server", action="store_true", help="server already running on --host (e.g. another machine)")
     args = ap.parse_args()
     return {"run": run_session, "server": run_server, "authority": run_authority, "sites": run_sites,

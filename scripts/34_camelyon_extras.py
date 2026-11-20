@@ -14,7 +14,7 @@ Reads the records of 33_camelyon_windows.py (same thresholds as 16: per partitio
      the statistics with the largest site loss, worst-site vs population loss, harmful share of
      EncMonitor-only alerts, and how often the top-ranked site (largest A_s) is the worst site.
 
-Usage (bundle root):
+Usage (from the repository root):
   python scripts/34_camelyon_extras.py
 Writes outputs/camelyon/analysis/extras.json and prints the tables.
 """

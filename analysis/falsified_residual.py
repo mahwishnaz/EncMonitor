@@ -4,7 +4,7 @@
 What does the monitor see when one site submits a fabricated or altered residual? The protocol provides no
 integrity protection; this test only measures what the released outputs show. Plaintext statistics of the same
 circuit (encmonitor.statistics.compute_dual_statistics), thresholds calibrated on honest calibration windows of the
-seed (Table 1 rule). A few windows are re-evaluated with the CKKS circuit (OpenFHE, depth 2) to confirm that the
+seed (the scoring code of the main detection table (Table 4 of the article; the same scoring is used for Tables 5-7)). A few windows are re-evaluated with the CKKS circuit (OpenFHE, depth 2) to confirm that the
 encrypted statistics and the decisions are the same.
 
 Data: MNIST, CIFAR-10, Camelyon17 patch split; seeds 2026-2030; window sampling identical to scripts 15/33.
@@ -18,7 +18,7 @@ Falsifications (site f submits x instead of its honest residual δ_f):
   cancel       : f = 1 submits −δ_0 (insider who knows site 0's residual; worst case for the pooled score)
   fake_shift   : f = 1 submits δ_1 + Δ, Δ = mean residual of site 1 under the vector shift η = 1 (fabricated drift)
 Measured: alert rates (Pooled, EncMonitor joint, Local-any), top-1 attribution A_s among alerted windows (share
-pointing at the falsifying site), noise-corrected coherence C_corr (Section 5 of the paper; C_corr < 0.5 =
+pointing at the falsifying site), noise-corrected coherence C_corr (Section 5 of the article; C_corr < 0.5 =
 cancellation flag of experiments/h_diagnostic), H/D_site, and a lower-tail check D_site < 1st pct of calibration.
 Writes outputs/analysis/falsified/{per_seed.csv, summary.csv, ckks_check.json}.
 Usage: python analysis/falsified_residual.py

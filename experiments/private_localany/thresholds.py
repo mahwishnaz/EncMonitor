@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Joint threshold multipliers per seed (EncMonitor c_joint vs hybrid c_h), to explain the hybrid's lower all-site power.
 
-Usage (bundle root): python experiments/private_localany/thresholds.py
+Usage (from the repository root): python experiments/private_localany/thresholds.py
 """
 from __future__ import annotations
 

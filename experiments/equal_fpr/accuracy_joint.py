@@ -7,7 +7,7 @@ with Local-any, so that all methods run at about the same clean FPR. Inputs are 
   MNIST/CIFAR-10: outputs/main/analysis/accuracy_link/<ds>/windows_accuracy.csv (+ saved records)
   Camelyon17: records.jsonl (field `acc`) and conditions.json (`clean_accuracy_per_site`) of a records dir.
 
-Usage (bundle root): python experiments/equal_fpr/accuracy_joint.py [--camelyon-dir DIR --tag TAG]
+Usage (from the repository root): python experiments/equal_fpr/accuracy_joint.py [--camelyon-dir DIR --tag TAG]
 """
 from __future__ import annotations
 

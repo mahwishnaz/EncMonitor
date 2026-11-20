@@ -7,7 +7,7 @@ technique, and the OpenMP thread count. Then asks OpenFHE for the same circuit w
 HEStd_128_classic under several scaling choices; OpenFHE raises an error when a ring dimension is too
 small for the requested security level. No timings are measured.
 
-Usage (bundle root): python experiments/ckks_params/run.py > experiments/ckks_params/run_log.txt
+Usage (from the repository root): python experiments/ckks_params/run.py > experiments/ckks_params/run_log.txt
 """
 from __future__ import annotations
 

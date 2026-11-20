@@ -2,7 +2,7 @@
 """Evaluation-key sizes per CKKS profile, each measured in a fresh process (OpenFHE serializes the
 evaluation keys of every context held in a process).
 
-Usage (bundle root): python experiments/private_localany/keysizes.py > experiments/private_localany/keysizes_log.txt
+Usage (from the repository root): python experiments/private_localany/keysizes.py > experiments/private_localany/keysizes_log.txt
 """
 from __future__ import annotations
 

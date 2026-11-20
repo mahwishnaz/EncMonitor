@@ -2,7 +2,7 @@
 """Equal-FPR comparison, full condition tables, seed-level uncertainty, pool sizes.
 
 Re-analysis of saved records only. Writes into this folder.
-Usage (bundle root): python experiments/equal_fpr/run.py > experiments/equal_fpr/run_log.txt
+Usage (from the repository root): python experiments/equal_fpr/run.py > experiments/equal_fpr/run_log.txt
 """
 from __future__ import annotations
 
@@ -91,7 +91,7 @@ def main() -> int:
         cond = pd.DataFrame(conds)
         R = {m: np.stack(v, axis=1) for m, v in rate_mats.items()}   # (seeds, conditions)
 
-        # sanity check against the saved paper analysis (same thresholds => identical rates)
+        # sanity check against the saved condition summary of script 16 (same thresholds => identical rates)
         saved = pd.read_csv(SAVED_SUMMARY[ds])
         saved = saved[saved.dataset == ds] if "dataset" in saved else saved
         mg = cond.merge(saved[["condition", "tpr_pooled", "tpr_encmon", "tpr_localmax"]], on="condition", suffixes=("", "_saved"))
@@ -117,10 +117,10 @@ def main() -> int:
                 row[f"share_conditions_{a}_below_{b}_by_0.05"] = float((d.mean(axis=0) < -0.05).mean())
             agg_rows.append(row)
 
-        # ---- 5. paper's best-case rows (same selection rule as the paper)
+        # ---- 5. best-case rows: the opposing/mixed condition with the highest hidden-drift rate per family (selection rule of script 16)
         geos = ["opposing"] if ds == "camelyon17" else ["opposing", "mixed"]
         cand = cond[cond.geometry.isin(geos) & (cond.family != "blur")]
-        # literal selection code of script 16 (gate), so that ties resolve as in the paper
+        # literal selection code of script 16 (pass criterion), so that ties resolve as in script 16
         best = pd.concat([g.sort_values("tpr_hidden", ascending=False).head(1) for _, g in cand.groupby("family")])
         for _, r in best.iterrows():
             best_rows.append({k: r[k] for k in r.index if not k.startswith("auroc")} | {"auroc_pooled": r.auroc_pooled,
@@ -151,7 +151,7 @@ def main() -> int:
     pd.set_option("display.width", 250)
     pd.set_option("display.max_columns", 50)
     f3 = lambda x: f"{x:.3f}"
-    print("== Sanity check: rates recomputed vs saved paper analysis ==")
+    print("== Sanity check: rates recomputed vs saved condition summary of script 16 ==")
     print(json.dumps(checks, indent=2))
     print("\n== 1. Held-out clean FPR (default thresholds) ==")
     print(fpr[~fpr.method.str.startswith("matched")].drop(columns="per_seed").to_string(index=False, float_format=f3))
@@ -171,7 +171,7 @@ def main() -> int:
               f"matched enc-local={r.diff_matched_encmon_minus_matched_localany:+.3f}"
               f"[{r.diff_matched_encmon_minus_matched_localany_lo:+.3f},{r.diff_matched_encmon_minus_matched_localany_hi:+.3f}] "
               f"joint-pooled={r.diff_encmon_joint_minus_pooled:+.3f}")
-    print("\n== 5. Best-case rows (paper selection), with joint calibration and Local-any ==")
+    print("\n== 5. Best-case rows (highest hidden-drift rate per family), with joint calibration and Local-any ==")
     cols = ["dataset", "condition", "tpr_pooled", "tpr_encmon_or", "tpr_encmon_joint", "tpr_localany", "tpr_exact",
             "tpr_matched_pooled", "tpr_matched_encmon", "tpr_matched_localany",
             "tpr_pooled_strat_lo", "tpr_pooled_strat_hi", "tpr_pooled_clus_lo", "tpr_pooled_clus_hi",

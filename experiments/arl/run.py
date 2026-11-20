@@ -2,7 +2,7 @@
 """False alarms over time (ARL0) and abrupt-shift delay at matched ARL0.
 
 Re-analysis of saved records only. Writes into this folder.
-Usage (bundle root): python experiments/arl/run.py > experiments/arl/run_log.txt
+Usage (from the repository root): python experiments/arl/run.py > experiments/arl/run_log.txt
 """
 from __future__ import annotations
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Ring dimension chosen by OpenFHE for the EncMonitor circuit under HYBRID vs BV key switching
 (HEStd_128_classic, depth 2, 50-bit scaling, FLEXIBLEAUTO). Parameters only, no timing.
-Usage (bundle root): python experiments/ckks_params/keyswitch.py > experiments/ckks_params/keyswitch_log.txt
+Usage (from the repository root): python experiments/ckks_params/keyswitch.py > experiments/ckks_params/keyswitch_log.txt
 """
 import json
 import math

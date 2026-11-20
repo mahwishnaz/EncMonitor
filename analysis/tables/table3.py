@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Table 3: held-out clean FPR per method (mean over seeds, t-interval, seed range) and ARL0 of the 2-of-3 rule from
+"""The false-positive-rate table (Table 5 of the article; internal name table3): held-out clean FPR per method (mean over seeds, t-interval, seed range) and ARL0 of the 2-of-3 rule from
 the FPR pooled over all held-out windows of all seeds (independent-window Markov model).
 Usage: python analysis/tables/table3.py   (after compute_rates.py)
 Writes outputs/tables/table3*.csv and .md.

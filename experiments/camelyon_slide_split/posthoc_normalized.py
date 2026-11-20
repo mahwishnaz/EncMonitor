@@ -8,7 +8,7 @@ site's mean clean energy over the calibration windows (a public calibration cons
 Score: max(D_mix / tau_mix, D_site_norm / tau_norm), jointly calibrated exactly like EncMonitor-joint.
 Reported for all datasets and both Camelyon17 splits, next to EncMonitor-joint and Local-any.
 
-Usage (bundle root): python experiments/camelyon_slide_split/posthoc_normalized.py > experiments/camelyon_slide_split/posthoc_normalized_log.txt
+Usage (from the repository root): python experiments/camelyon_slide_split/posthoc_normalized.py > experiments/camelyon_slide_split/posthoc_normalized_log.txt
 """
 from __future__ import annotations
 

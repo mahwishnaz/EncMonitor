@@ -3,7 +3,7 @@
 (single/coherent) after an alert? Scores rH, rH_corr (L2) and C, C_corr (L3).
 
 Re-analysis of saved records only. Writes into this folder.
-Usage (bundle root): python experiments/h_diagnostic/run.py > experiments/h_diagnostic/run_log.txt
+Usage (from the repository root): python experiments/h_diagnostic/run.py > experiments/h_diagnostic/run_log.txt
 """
 from __future__ import annotations
 

@@ -4,7 +4,7 @@
 For every dataset, seed and window: exact RKHS Gram matrix of the site residuals (V-statistic),
 unbiased per-site MMD^2_U, and RFF Gram matrices for m = 32, 64, 128, 256. Cached per seed in windows/.
 
-Usage (bundle root):
+Usage (from the repository root):
   for i in 1 2 3 4 5 6 7 8; do CUDA_VISIBLE_DEVICES=0 python experiments/exact_site_mmd/run.py && break; sleep 15; done
 """
 from __future__ import annotations

@@ -19,7 +19,8 @@ Continuous scores for AUROC/AUPRC: d_mix, d_site, heterogeneity, encmon = max(D_
 exact_mmd, localmax, votes.
 
 Outputs (per quantile): condition_summary.csv, clean_fpr.csv, family_gate.csv,
-analysis_summary.json, and figures F3 (detection vs severity), F4 (hidden drift), F5 (attribution).
+analysis_summary.json, and the figures detection rate vs severity (F3_detection_<dataset>.png), hidden-drift rate
+vs severity (F4_hidden_drift_<dataset>.png) and site attribution (F5_attribution_<dataset>.png).
 Confidence intervals: 95% bootstrap over windows, stratified by partition seed.
 """
 from __future__ import annotations
@@ -178,7 +179,7 @@ def figures(summary: pd.DataFrame, out: Path) -> None:
 
     for ds, gd in summary.groupby("dataset"):
         fams = list(dict.fromkeys(gd.family))
-        # F3: detection rate vs severity, opposing geometry (single for blur/noise)
+        # figure: detection rate vs severity, opposing geometry (single for blur/noise)
         fig, axes = plt.subplots(1, len(fams), figsize=(3.2 * len(fams), 3.4), sharey=True)
         for ax, fam in zip(np.atleast_1d(axes), fams):
             gf = gd[gd.family == fam]
@@ -192,12 +193,12 @@ def figures(summary: pd.DataFrame, out: Path) -> None:
             ax.set_ylim(-0.02, 1.02)
         np.atleast_1d(axes)[0].set_ylabel("detection rate")
         np.atleast_1d(axes)[-1].legend(fontsize=7, loc="lower right")
-        fig.suptitle(f"F3 ({ds}): detection rate at calibrated thresholds")
+        fig.suptitle(f"{ds}: detection rate vs severity at calibrated thresholds")
         fig.tight_layout()
         fig.savefig(out / f"F3_detection_{ds}.png", dpi=200)
         plt.close(fig)
 
-        # F4: hidden-drift rate vs severity, opposing and mixed
+        # figure: hidden-drift rate vs severity, opposing and mixed
         fig, axes = plt.subplots(1, len(fams), figsize=(3.2 * len(fams), 3.4), sharey=True)
         for ax, fam in zip(np.atleast_1d(axes), fams):
             gf = gd[gd.family == fam]
@@ -210,12 +211,12 @@ def figures(summary: pd.DataFrame, out: Path) -> None:
             ax.set_ylim(-0.02, 1.02)
         np.atleast_1d(axes)[0].set_ylabel("hidden-drift rate\n(D_site/H alert, D_mix silent)")
         np.atleast_1d(axes)[-1].legend(fontsize=7)
-        fig.suptitle(f"F4 ({ds}): drift missed by the pooled score but caught by the dual statistic")
+        fig.suptitle(f"{ds}: drift missed by the pooled score but caught by the dual statistic")
         fig.tight_layout()
         fig.savefig(out / f"F4_hidden_drift_{ds}.png", dpi=200)
         plt.close(fig)
 
-        # F5: attribution (top-1 for single, top-k recall otherwise), mean over severities
+        # figure: site attribution (top-1 for single, top-k recall otherwise), mean over severities
         geos = ["single", "coherent", "opposing", "mixed"]
         mat = np.full((len(fams), len(geos)), np.nan)
         for i, fam in enumerate(fams):
@@ -233,7 +234,7 @@ def figures(summary: pd.DataFrame, out: Path) -> None:
                     ax.text(j, i, f"{mat[i, j]:.2f}", ha="center", va="center",
                             color="white" if mat[i, j] < 0.6 else "black", fontsize=8)
         fig.colorbar(im, ax=ax, label="attribution accuracy")
-        ax.set_title(f"F5 ({ds}): site attribution, mean over severities")
+        ax.set_title(f"{ds}: site attribution, mean over severities")
         fig.tight_layout()
         fig.savefig(out / f"F5_attribution_{ds}.png", dpi=200)
         plt.close(fig)
@@ -284,7 +285,7 @@ def main() -> int:
               "best_hidden_rate"]].to_string(index=False, float_format=lambda x: f"{x:.2f}"))
     print("\n== Main-experiment decision ==")
     print(json.dumps(decision, indent=2))
-    print(f"\nWrote condition_summary.csv, clean_fpr.csv, family_gate.csv, analysis_summary.json and F3/F4/F5 figures to {out}")
+    print(f"\nWrote condition_summary.csv, clean_fpr.csv, family_gate.csv, analysis_summary.json and the figures F3_*.png, F4_*.png, F5_*.png (detection, hidden drift, attribution) to {out}")
     return 0
 
 

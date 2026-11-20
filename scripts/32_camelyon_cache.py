@@ -16,7 +16,7 @@ Per seed it writes outputs/camelyon/main/camelyon17/seed_<p>/:
   indices_XXX = WILDS patch ids), preprocessor.npz, rff_map.npz, baselines.npz,
   global_baseline.npy, pieces.npz, cache_meta.json, cache_done.json
 
-Usage (bundle root):
+Usage (from the repository root):
   CUDA_VISIBLE_DEVICES=0 python scripts/32_camelyon_cache.py --root data/wilds
 """
 from __future__ import annotations

@@ -2,7 +2,7 @@
 """Private Local-any and a hybrid vs EncMonitor under the same disclosure policy.
 
 Detection, FPR, ARL0 and leakage (CPU). The CKKS cost is in ckks.py.
-Usage (bundle root): python experiments/private_localany/run.py > experiments/private_localany/run_log.txt
+Usage (from the repository root): python experiments/private_localany/run.py > experiments/private_localany/run_log.txt
 """
 from __future__ import annotations
 
@@ -45,7 +45,7 @@ CLUSTER_REPS = 2000
 
 
 def score(g: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
-    """rx_common scoring + EncMonitor-norm (normalized_weights) + private Local-any (i)/(ii) + hybrid, one partition seed."""
+    """rx_common scoring + EncMonitor-norm (normalized_weights) + encrypted Local-any (i)/(ii) + hybrid, one partition seed."""
     sc, info = E8.add_norm(g)
     cal = g[g.condition == "clean_calibration"]
     E_cal = np.stack(cal.site_energy.to_numpy())

@@ -2,10 +2,11 @@
 """Weighted variants of EncMonitor.
 
 Per record set and seed, the residual Gram matrices of every window are regenerated from the caches
-(rx_windows / CensusCtx, same seeds and streams as the window runners). Gate: the regenerated uniform D_mix and
+(rx_windows / CensusCtx, same seeds and streams as the window runners). Pass criterion: the regenerated uniform D_mix and
 D_site must equal the saved values (relative difference < 1e-6); a set/seed that fails is excluded and reported.
 
-  uniform     : saved records, private_localany `score` (Table 1 rule)
+  uniform     : saved records, private_localany `score`
+                (the scoring code of the main detection table (Table 4 of the article; the same scoring is used for Tables 5-7))
   variant (i) : `encmon_norm` of the same scoring = D_mix unchanged, site-energy term divided by the clean energy
                 (only the site-energy term is weighted)
   variant (ii): w_s ∝ 1/ē⁰_s (calibration windows of the seed), Σ w_s = 1, used in BOTH D_mix_w = wᵀGw and
@@ -116,13 +117,13 @@ def main() -> int:
             checks.append(chk)
             if wr:
                 ws.append(wr)
-            print(f"[{name} {seed}] gate {'PASS' if chk['pass'] else 'FAIL'} "
+            print(f"[{name} {seed}] pass criterion {'PASS' if chk['pass'] else 'FAIL'} "
                   f"(d_mix {chk.get('max_rel_d_mix', float('nan')):.1e}, d_site {chk.get('max_rel_d_site', float('nan')):.1e}) {chk['seconds']}s",
                   flush=True)
     sfx = f"_{args.tag}" if args.tag else ""
     c2.write_csv(pd.DataFrame(rows), OUTD / f"per_seed{sfx}.csv", "weighted variants per seed")
     c2.write_csv(pd.DataFrame(ws), OUTD / f"weights{sfx}.csv", "variant (ii) weights per seed")
-    c2.write_csv(pd.DataFrame(checks), OUTD / f"checks{sfx}.csv", "gate: regenerated uniform D_mix/D_site vs saved")
+    c2.write_csv(pd.DataFrame(checks), OUTD / f"checks{sfx}.csv", "pass criterion: regenerated uniform D_mix/D_site vs saved")
     return 0
 
 

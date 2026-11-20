@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Exact-kernel analysis (CPU): agreement of RFF site energies with exact MMD^2 and oracle detection.
 
-Usage (bundle root): python experiments/exact_site_mmd/analyze.py > experiments/exact_site_mmd/analysis_log.txt
+Usage (from the repository root): python experiments/exact_site_mmd/analyze.py > experiments/exact_site_mmd/analysis_log.txt
 """
 from __future__ import annotations
 

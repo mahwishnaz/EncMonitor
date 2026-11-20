@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Table 4: Camelyon17 hospital data. Patch split and patient-level split (20 seeds),
+"""The hospital table (Table 6 of the article; internal name table4): Camelyon17 hospital data. Patch split and patient-level split (20 seeds),
 slide split (5 seeds, for reference). Clean FPR and detection of the 36 natural opposing/mixed conditions.
 Intervals are descriptive (seeds share patches and patients).
 Usage: python analysis/tables/table4.py   (after compute_rates.py)

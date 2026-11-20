@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""CKKS cost of private Local-any (encrypted bit sum), EncMonitor and the hybrid.
+"""CKKS cost of encrypted Local-any (encrypted bit sum), EncMonitor and the hybrid.
 
 CPU only, OpenFHE default threads (as in 21_run_ckks_replay.py). Times only if the load average is low.
-Usage (bundle root): python experiments/private_localany/ckks.py > experiments/private_localany/ckks_log.txt
+Usage (from the repository root): python experiments/private_localany/ckks.py > experiments/private_localany/ckks_log.txt
 """
 from __future__ import annotations
 
@@ -133,7 +133,7 @@ def main() -> int:
     bits = (E > np.median(E)).astype(int)          # bit values do not affect time
     res = {"load_before": load0, "timed": timed, "windows": W, "sites": S, "m": m}
 
-    # ---------- private Local-any: encrypted bit sum
+    # ---------- encrypted Local-any: encrypted bit sum
     for kind in ("ckks_d0", "bgv_t65537_d0"):
         cc, kp = bit_context(kind)
         r = {"ring_dimension": int(cc.GetRingDimension()), "log2_Q": math.log2(int(cc.GetModulus())),
@@ -157,7 +157,7 @@ def main() -> int:
         res[f"private_localany_{kind}"] = r
         print(kind, json.dumps({k: v for k, v in r.items() if k != "time_sec"}), flush=True)
 
-    # ---------- EncMonitor (paper setting, N = 16384 hybrid key switching) and hybrid in the same context
+    # ---------- EncMonitor (article setting, N = 16384 hybrid key switching) and hybrid in the same context
     for label, builder in (("N16384_hybridKS", lambda: build_context(m, multiplicative_depth=2, scaling_mod_size=50)),
                            ("N8192_BV", lambda: E10.build_context_bv(m))):
         b = builder()

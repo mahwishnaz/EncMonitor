@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Cost for larger consortia, S = 5, 10, 20, 50 (m = 64, the paper's CKKS profile: depth 2,
+"""Cost for larger consortia, S = 5, 10, 20, 50 (m = 64, the article's CKKS profile: depth 2,
 scaling 50 bits, HEStd_128_classic, hybrid key switching; build_context of the release).
 
 MEASURED with the CKKS implementation for every S (CPU only, OpenFHE default threads, as in
 private_localany/ckks.py): residual ciphertext size, result ciphertext size, evaluation-key sizes, server time of
 the full circuit (D_mix, D_site, H and the S contributions A_s), per-site encryption time, decryption time of the
-3 global scalars and of the S contributions; private Local-any (encrypted alert bits, CKKS depth 0 and BGV,
+3 global scalars and of the S contributions; encrypted Local-any (encrypted alert bits, CKKS depth 0 and BGV,
 as in private_localany/ckks.py): bit ciphertext size, server time of the S−1 additions, decryption of the count.
 Times are taken only if the 1-minute load average is below MAX_LOAD (shared server rule); otherwise only sizes
 and operation counts are written and the time fields are marked "not timed".

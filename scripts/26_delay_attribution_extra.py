@@ -2,9 +2,9 @@
 """Additional analyses from saved records only (no new windows are generated).
 
 A. Detection delay across shift severity (2-of-3 confirmation)
-   A1  abrupt shift: delay for every shifted condition (all severities, all geometries);
-   A2  gradual shift: a stream whose severity rises step by step (sev1 -> sev2 -> sev3 -> sev4,
-       `--steps` windows per step) for every family/geometry with four severities.
+   abrupt shift: delay for every shifted condition (all severities, all geometries);
+   gradual shift: a stream whose severity rises step by step (sev1 -> sev2 -> sev3 -> sev4,
+   `--steps` windows per step) for every family/geometry with four severities.
 B. False accusation rate of the attribution and a per-geometry site-flag table:
    after a global alert, a site is flagged when its A_s exceeds the 95th percentile of its own
    A_s on the clean calibration windows. Reported: flag rate of shifted sites (true flags) and of
@@ -14,7 +14,7 @@ C. Number of sites: the S = 10, m = 64 rows of the ablation core grid (S x m x n
 
 Thresholds are calibrated per dataset and partition seed exactly as in 16_analyze_screening.py.
 
-Usage (bundle root):
+Usage (from the repository root):
   python scripts/26_delay_attribution_extra.py --cache-dirs outputs/main/mnist outputs/main/cifar10 \
       --ablation-summary outputs/ablation/analysis/q095/ablation_summary.csv --out-dir outputs/main/analysis/extra2_q095
 """
@@ -95,7 +95,7 @@ def main() -> int:
     shifted = sc[~sc.condition.str.startswith("clean")]
     methods = ("pooled", "encmon", "joint")
 
-    # ---------------- A1 abrupt delay for every condition
+    # ---------------- abrupt shift: delay for every condition
     rows = []
     for (ds, cond), g in shifted.groupby(["dataset", "condition"]):
         r = {"dataset": ds, "condition": cond, "family": g.family.iloc[0], "severity": g.severity.iloc[0],
@@ -108,7 +108,7 @@ def main() -> int:
         rows.append(r)
     abrupt = pd.DataFrame(rows)
 
-    # ---------------- A2 gradual drift: severity rises step by step
+    # ---------------- gradual shift: severity rises step by step
     rows = []
     for (ds, fam, geo), g in shifted.groupby(["dataset", "family", "geometry"]):
         sevs = sorted(g.severity.unique())
@@ -172,10 +172,10 @@ def main() -> int:
     pd.set_option("display.width", 220)
     f3 = lambda x: f"{x:.3f}"
     om = abrupt[abrupt.geometry.isin(["opposing", "mixed"])]
-    print("== A1 Abrupt shift, opposing/mixed: mean over severities (delay in windows; confirmed = share of streams) ==")
+    print("== Abrupt shift, opposing/mixed: mean over severities (delay in windows; confirmed = share of streams) ==")
     print(om.groupby(["dataset", "family", "severity"])[[f"{k}_{m}" for m in methods for k in ("tpr", "delay", "confirmed")]]
           .mean().round(3).to_string())
-    print("\n== A2 Gradual shift (severity rises every", args.steps, "windows) ==")
+    print("\n== Gradual shift (severity rises every", args.steps, "windows) ==")
     print(gradual.to_string(index=False, float_format=f3))
     print("\n== B Site flags after a global alert (A_s above its clean 95th percentile) ==")
     print(accuse.to_string(index=False, float_format=f3))

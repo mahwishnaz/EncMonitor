@@ -152,7 +152,7 @@ def main() -> int:
     ap.add_argument("--cache-dir", required=True, help="e.g. outputs/main/mnist")
     ap.add_argument("--seeds", default="")
     ap.add_argument("--device", default="cuda", help="device for exact-kernel MMD (torch)")
-    ap.add_argument("--only", default="", help="comma-separated families to run (debug)")
+    ap.add_argument("--only", default="", help="comma-separated families to run")
     ap.add_argument("--force", action="store_true")
     args = ap.parse_args()
 

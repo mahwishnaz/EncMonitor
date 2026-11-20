@@ -15,7 +15,7 @@ Window sampling, label-prior resampling and the controlled vector shift follow 1
 New family 'exchange': a receiving site draws a fraction q of its pool from another hospital's
 monitoring pool (configs/camelyon.yaml: exchange_sources); no image is changed.
 
-Usage (bundle root):
+Usage (from the repository root):
   CUDA_VISIBLE_DEVICES=0 python scripts/33_camelyon_windows.py
 """
 from __future__ import annotations
@@ -114,7 +114,7 @@ def main() -> int:
     ap.add_argument("--checkpoint", default="outputs/camelyon/model/resnet18_camelyon.pt")
     ap.add_argument("--seeds", default="")
     ap.add_argument("--device", default="cuda", help="device for the exact-kernel MMD (torch)")
-    ap.add_argument("--only", default="", help="comma-separated families (debug)")
+    ap.add_argument("--only", default="", help="comma-separated families")
     ap.add_argument("--force", action="store_true")
     args = ap.parse_args()
 

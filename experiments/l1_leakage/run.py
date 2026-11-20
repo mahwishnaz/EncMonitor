@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Site-identity leakage of L1 releases (binary / coarse alert) vs L2, same attack as leakage_dp/run.py (a).
 
-Usage (bundle root): python experiments/l1_leakage/run.py > experiments/l1_leakage/run_log.txt
+Usage (from the repository root): python experiments/l1_leakage/run.py > experiments/l1_leakage/run_log.txt
 """
 from __future__ import annotations
 

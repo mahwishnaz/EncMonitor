@@ -55,7 +55,7 @@ def main() -> int:
     ap = argparse.ArgumentParser(description="CKKS cost grid for the EncMonitor circuit")
     ap.add_argument("--config", default="configs/ckks.yaml")
     ap.add_argument("--out-dir", default="outputs/ckks/cost_grid")
-    ap.add_argument("--repeats", type=int, default=0, help="override config repeats (debug)")
+    ap.add_argument("--repeats", type=int, default=0, help="override config repeats")
     args = ap.parse_args()
 
     cfg = yaml.safe_load(open(args.config))

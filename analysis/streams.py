@@ -5,7 +5,8 @@ Streams are built at the level of records (individual rows / patches) arriving a
 consecutive records of every site. Two window layouts: non-overlapping (step n) and 50 % overlapping (step n/2,
 consecutive windows share half of their records, so their statistics are autocorrelated).
 Policy per method (applied after decryption): a window alerts if the method's rule fires (thresholds of the seed,
-calibrated on its 500 clean calibration windows exactly as in Table 1); an alarm is CONFIRMED when at least 2 of the
+calibrated on its 500 clean calibration windows exactly as in
+the scoring code of the main detection table (Table 4 of the article; the same scoring is used for Tables 5-7)); an alarm is CONFIRMED when at least 2 of the
 last 3 windows alerted; after a confirmed alarm the 3-window history is cleared (reset) and monitoring continues.
 Disclosure (default policy L2 every window, L3 after a global alert): L3 frequency = share of windows with an alert;
 also reported: L3 only after a confirmed alarm.

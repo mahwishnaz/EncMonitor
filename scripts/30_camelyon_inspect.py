@@ -11,7 +11,7 @@ and the tumor fraction, and writes the same table to
 The later scripts (31-34) use this table to choose the training data and the
 five site pools.
 
-Usage (bundle root):
+Usage (from the repository root):
   python scripts/30_camelyon_inspect.py --root data/wilds --download   # first time
   python scripts/30_camelyon_inspect.py --root data/wilds              # afterwards
 """

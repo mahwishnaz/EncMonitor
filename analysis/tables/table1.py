@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Table 1: detection (pre-specified aggregates) and held-out clean FPR per method and setting; mean over seeds and
+"""The main detection table (Table 4 of the article; internal name table1): detection (pre-specified aggregates) and held-out clean FPR per method and setting; mean over seeds and
 t-interval (t = 2.093 for 20 seeds, 2.776 for 5). Per-seed values: table1_per_seed.csv (Supplementary).
 Usage: python analysis/tables/table1.py   (after compute_rates.py)
 Writes outputs/tables/table1*.csv and .md.

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Table 5: census data (n = 250 and n = 1,000): clean FPR, injected opposing/mixed shifts (16 conditions), real
+"""The census table (Table 7 of the article; internal name table5): census data (n = 250 and n = 1,000): clean FPR, injected opposing/mixed shifts (16 conditions), real
 drift at all five states and at one/two states (mean of the four years 2015-2018).
 Usage: python analysis/tables/table5.py   (after compute_rates.py)
 Writes outputs/tables/table5*.csv and .md.

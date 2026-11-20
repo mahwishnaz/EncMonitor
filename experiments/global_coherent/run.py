@@ -2,7 +2,7 @@
 """Weak coherent shift at all sites vs two sites vs one site (vector and label-prior shifts on
 cached representations, CPU).
 
-Usage (bundle root): python experiments/global_coherent/run.py > experiments/global_coherent/run_log.txt
+Usage (from the repository root): python experiments/global_coherent/run.py > experiments/global_coherent/run_log.txt
 """
 from __future__ import annotations
 

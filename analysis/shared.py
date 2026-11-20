@@ -1,7 +1,8 @@
 """Shared helpers of the analysis scripts (analysis/ and analysis/tables/). Imports the code of this repository.
 
 - SETS: every record set with its folder (20 seeds where they exist; 2026-2030 are the original five seeds).
-- score(): the scoring of experiments/private_localany/run.py (Table 1 code), unchanged, plus matched-FPR alerts.
+- score(): the scoring of experiments/private_localany/run.py, i.e. the scoring code of the main detection table (Table 4 of the article; the same scoring is used for Tables 5-7),
+  unchanged, plus matched-FPR alerts.
 - Ctx: experiments/common/rx_windows.SeedContext for any cache folder (patch, slide, patient split).
 - CensusCtx: the pools and window sampling of experiments/census/windows.py, returning residual Gram matrices.
 - commit(): the commit hash of this repository (written into every result file header).
@@ -94,7 +95,8 @@ def load_records(name: str, seeds=None) -> pd.DataFrame:
 
 
 def score(g: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
-    """Table 1 scoring (private_localany/run.py `score`) for one seed + matched-FPR alerts (held-out 95th pct)."""
+    """Scoring code of the main detection table (Table 4 of the article; the same scoring is used for Tables 5-7):
+    private_localany/run.py `score` for one seed, plus matched-FPR alerts (held-out 95th pct)."""
     sc, info = P1.score(g)
     held = sc[sc.condition == "clean_heldout"]
     for k, col in METHODS.items():

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Leakage of the released values (a, b) and a differential-privacy noise trade-off (c). CPU only.
 
-Usage (bundle root): python experiments/leakage_dp/run.py > experiments/leakage_dp/run_log.txt
+Usage (from the repository root): python experiments/leakage_dp/run.py > experiments/leakage_dp/run_log.txt
 """
 from __future__ import annotations
 

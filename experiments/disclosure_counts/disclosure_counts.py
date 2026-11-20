@@ -2,9 +2,9 @@
 """Exact alert counts behind the default-policy disclosure counts E[V] = 3 + S x alert rate.
 
 Re-uses the scoring of private_localany/run.py (joint EncMonitor rule, OR rule) on the saved records.
-Counts held-out clean windows and the windows of the non-vector opposing/mixed aggregate (A1; for census the
+Counts held-out clean windows and the windows of the non-vector opposing/mixed aggregate (all shift families except the vector shift; for census the
 injected label-prior/age-mix opposing/mixed conditions). Reads only saved records; writes only into this folder.
-Usage (bundle root): python experiments/disclosure_counts/disclosure_counts.py
+Usage (from the repository root): python experiments/disclosure_counts/disclosure_counts.py
 """
 import importlib.util
 import json

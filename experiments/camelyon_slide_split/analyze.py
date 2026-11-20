@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Analysis (CPU): slide-level split vs patch-level split.
 
-Usage (bundle root): python experiments/camelyon_slide_split/analyze.py > experiments/camelyon_slide_split/analysis_log.txt
+Usage (from the repository root): python experiments/camelyon_slide_split/analyze.py > experiments/camelyon_slide_split/analysis_log.txt
 """
 from __future__ import annotations
 
@@ -90,7 +90,7 @@ def main() -> int:
     print(fpr.to_string(index=False, float_format=f))
     print("\n== Aggregates (mean over seeds, 95% cluster bootstrap) ==")
     print(agg.to_string(index=False, float_format=f))
-    print("\n== Best-case rows of the paper, both splits ==")
+    print("\n== Best-case rows (highest hidden-drift rate per family, experiments/equal_fpr/best_rows.csv), both splits ==")
     print(cond[cond.condition.isin(best)].pivot_table(index="condition", columns="split", values=["pooled", "encmon_joint", "localany"]).to_string(float_format=f))
     print("\n== Tumor fraction, reference vs monitoring slides ==")
     print(gaps.to_string(index=False, float_format=f))

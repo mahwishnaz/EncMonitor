@@ -48,7 +48,7 @@ families:
 
 realistic_families: [stain, brightness, contrast, blur, label_prior, exchange]
 
-gate:                             # same rule as configs/main.yaml
+gate:                             # pass criterion, same rule as configs/main.yaml
   max_pooled_rate: 0.5
   min_dual_rate: 0.8
   geometries: [opposing, mixed]

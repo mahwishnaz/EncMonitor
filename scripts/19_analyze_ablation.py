@@ -187,7 +187,7 @@ def figures(summary: pd.DataFrame, fid: pd.DataFrame, cfg: dict, out: Path) -> N
         axes[1].set_ylim(-0.02, 1.02)
         axes[1].set_title("Cancellation exposure")
         axes[1].legend(fontsize=6)
-        fig.suptitle("F6: RFF trade-off (latency panel added after the CKKS runs)")
+        fig.suptitle("RFF trade-off (latency panel added after the CKKS runs)")
         fig.tight_layout()
         fig.savefig(out / "F6_rff_tradeoff.png", dpi=200)
         plt.close(fig)

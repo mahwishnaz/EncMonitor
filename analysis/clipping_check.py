@@ -4,7 +4,9 @@ clip radius C = 8 (main setting) and C = 16 (same C/sqrt(d) as MNIST: 8/sqrt(128
 
 For C = 16 the standardizer, median bandwidth, RFF map and site baselines are refitted exactly as in scripts 14/32
 (only the clip radius differs); the windows use the same caches, seeds and streams. Every window is turned into a
-record (D_mix, D_site, H, site energies) and scored with the Table 1 code (private_localany `score`).
+record (D_mix, D_site, H, site energies) and scored with
+the scoring code of the main detection table (Table 4 of the article; the same scoring is used for Tables 5-7)
+(private_localany `score`).
 C = 8 is regenerated the same way and checked against the saved records (relative difference < 1e-6).
 Also reports the clipped fraction of the standardized representations at each C.
 Writes outputs/analysis/clipping/{per_seed.csv, checks.csv, fractions.csv}.

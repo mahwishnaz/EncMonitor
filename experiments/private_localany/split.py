@@ -2,7 +2,7 @@
 """Hybrid with a split false-alarm budget (split-97.5 and split-tuned).
 
 Reuses run.py (same windows, same scoring) and adds two rules.
-Usage (bundle root): python experiments/private_localany/split.py > experiments/private_localany/split_log.txt
+Usage (from the repository root): python experiments/private_localany/split.py > experiments/private_localany/split_log.txt
 """
 from __future__ import annotations
 

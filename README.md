@@ -177,9 +177,16 @@ The MIT license of this repository (`LICENSE`) also covers these files.
    its docstring.
 8. Tables and analyses of the reported numbers (all partition seeds): `scripts/run_seeds.sh` runs the
    experiments for every seed; `analysis/` holds the analyses (weighted variants, clipping, patient split,
-   falsified residual, streams, worked example, cost projection; shared code in `analysis/shared.py`) and
+   falsified residual, streams, cost projection; shared code in `analysis/shared.py`) and
    `analysis/tables/make_all_tables.py` regenerates every table into `outputs/tables/`. Results of the
    analyses go to `outputs/analysis/`.
+   Worked example of Figure 1: `analysis/worked_example.py` reads the saved per-window records
+   (`seed_<seed>/records.jsonl`) and needs nothing else. With the unpacked data archive:
+   `python analysis/worked_example.py encmonitor_data/mnist` (or `outputs/main/mnist`). For each seed it calibrates
+   τ_mix, τ_site and c on the 500 calibration windows (95th percentile, "higher"), takes the first window of
+   MNIST seed 2026, condition `vector2__opposing` (S = 5, m = 64), in which the EncMonitor alert fires and the
+   pooled alert is silent, and prints D_mix/τ_mix, D_site/τ_site, score/c, A_s, the residual norms and the
+   alert rates of EncMonitor and the pooled score for seed 2026 and their mean over the 20 seeds.
 9. Reproduction check of partition seed 2026: `scripts/reproduce_seed2026.sh`, then
    `scripts/compare_seed2026.py` (identical window indices, statistics within a relative difference of 1e-6,
    identical alert decisions).
@@ -204,13 +211,37 @@ the code matches the saved records. What they stand for:
 | `e9` | `experiments/private_localany/run.py` | table read from `experiments/l1_leakage/l1_leakage_per_seed.csv` |
 | `P1`, `P1C` | `analysis/`, `experiments/disclosure_counts/` | the modules `experiments/private_localany/run.py` (scoring of all methods) and `experiments/private_localany/ckks.py` (CKKS cost) |
 | `e0` | `analysis/` | mean clean site energy over the calibration windows |
+| `gate` (configuration key), `gate()`, `axis_gate()` | `configs/*.yaml`; scripts 16, 19, 21 | pass criterion fixed before the results (cancellation criterion in `main.yaml` and `camelyon.yaml`, robustness criterion of the ablations, accuracy criterion of the CKKS replay); the functions evaluate it |
+| `family_gate.csv`, `axis_gate.csv` | outputs of scripts 16 and 19 | result of the pass criterion per shift family and per ablation axis |
+| `g4`, `g5` | `scripts/23_net_session.py` | `g4`: in-process CKKS results read from `--ckks-jsonl`, compared with the network session; `g5`: default `--run-id` of a session |
+| `A1_natural_opposing_mixed` | `experiments/common/rx_common.py` and the scripts that score records; columns and aggregate values of their CSV files | all shift families except the vector shift, at the opposing or mixed geometry (32 conditions for MNIST and CIFAR-10, 36 for Camelyon17); for census the injected label-prior and age-mix shifts at opposing/mixed (16). `A1` in the check keys of `experiments/private_localany/run.py` and in the columns `tpr_*_A1` of `experiments/leakage_dp/` is the same aggregate |
+| `A2_all_opposing_mixed`, `A3_all_shifted`, `A4_single`, `A5_coherent` | `experiments/common/rx_common.py` | opposing/mixed including the vector shift; every shifted condition; one shifted site; two sites shifted in the same direction (census: label-prior and age-mix shifts only) |
+| `vector_all`, `vector_opposing_mixed` | `analysis/clipping_check.py`, `experiments/census/analyze.py` | vector shift at all geometries; vector shift at opposing/mixed |
+| `best_case_rows`, `best_case_rows_of_paper` | `experiments/arl/`, `experiments/normalized_weights/`, `experiments/camelyon_slide_split/analyze.py` | per shift family, the opposing/mixed condition with the highest hidden-drift rate (selection of script 16, `experiments/equal_fpr/best_rows.csv`); not a table of the article |
+| `"patch_level (paper)"`, `"slide_level (E5)"` | `experiments/camelyon_slide_split/analyze.py`, column `split` of its CSV files | Camelyon17 patch split of the main experiment; slide-level split |
+| `paper`, `paper_profiles` | `experiments/ckks_params/run.py` | the CKKS contexts of the EncMonitor profile (`build_context`) for m = 32, 64, 128, 256 |
+| `ckks_d0`, `bgv_t65537_d0` | `experiments/private_localany/ckks.py`, `analysis/cost_projection.py` | encrypted Local-any count of alert bits with CKKS at depth 0 (first modulus 35 bits, scaling 25 bits), and with BGV at depth 0 (plaintext modulus 65537) |
+| `table1`, `table3`, `table4`, `table5` (scripts, `.csv`, `.md` and the title in their header line) | `analysis/tables/`, `encmonitor_data/tables/` | Table 4 (detection rows), Table 5, Table 6 and Table 7 of the article; `table1_per_seed` = Tables S1, S2 |
+| `t9`, `table9_extra.csv` | `scripts/25_extra_analyses.py` | best-case conditions (per data set and family, the opposing/mixed condition with the highest hidden-drift rate) with detection, joint calibration, 2-of-3 delay and ranking; not a table of the article |
+| `F3_detection_<dataset>.png`, `F4_hidden_drift_<dataset>.png`, `F5_attribution_<dataset>.png` | `scripts/16_analyze_screening.py` | figures of the detection rate and of the hidden-drift rate against severity, and of site attribution; not figures of the article |
+| `F6_rff_tradeoff.png` | `scripts/19_analyze_ablation.py` | figure of the RFF-dimension trade-off of the ablations; not a figure of the article |
+| `private_localany`, `fig_rff_r3.py` | `experiments/` | encrypted Local-any (encrypted alert bits), its scoring and cost; `fig_rff_r3.py` draws the RFF-dimension trade-off figure `fig_rff_tradeoff_r3.pdf` |
+| check keys "vs E1", "E3 ... vs E8", "vs E9"; keys `E3/...` | `experiments/private_localany/run.py` (`checks.json`), `experiments/normalized_weights/run.py` (`decision_differences.csv`) | E1: `experiments/equal_fpr/` (`condition_full.csv`); E3: the weak shifts (as `e3_part`); E8: `experiments/normalized_weights/run.py`; E9: `experiments/l1_leakage/` |
 
 ## Which tag produced which numbers
 | Numbers | Tag |
 |---|---|
 | Detection rates, false-positive rates and all other per-window results of the experiments | `revision1-code` |
-| Analysis tables (per-seed tables, paired and matched comparisons, weighted variants, clipping, patient split, falsified residual, streams, worked example) | `revision1-code-analysis` |
+| Analysis tables (per-seed tables, paired and matched comparisons, weighted variants, clipping, patient split, falsified residual, streams) | `revision1-code-analysis` |
 | CKKS cost of encrypted Local-any (alert-count parameters) and the cost projection to S = 5, 10, 20, 50 | `revision1-code-final` |
 
 The tag `revision1-code-final` changes only the parameters of the encrypted Local-any alert count
 (`experiments/private_localany/ckks.py`: first modulus 35 bits instead of 30); no detection result depends on them.
+
+The worked example (`analysis/worked_example.py`) only reads the saved records. The MNIST records of seed 2026 come
+from the original runs and have no `RUN_INFO.json`, so no tag is named for them; the `RUN_INFO.json` files of seeds
+2031-2045 name `revision1-code`.
+
+## Version v0.1.1
+v0.1.1 differs from v0.1.0 only in comments, docstrings, help texts and printed messages, figure titles, the
+worked-example script, requirements.txt and this README; no identifier, key, file name or result changed.

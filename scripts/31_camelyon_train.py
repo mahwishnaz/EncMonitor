@@ -12,7 +12,7 @@ Output (outputs/camelyon/model/):
   train_report.json      accuracy per hospital on held-out patches (id_val for the
                          training hospitals, OOD val/test for the other two)
 
-Usage (bundle root):
+Usage (from the repository root):
   python scripts/31_camelyon_train.py --root data/wilds
   (add --no-pretrained if the ImageNet weights cannot be downloaded)
 """

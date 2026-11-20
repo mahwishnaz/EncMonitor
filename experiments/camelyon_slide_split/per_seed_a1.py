@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Per-seed mean over natural opposing+mixed conditions, slide split.
-Usage (bundle root): python experiments/camelyon_slide_split/per_seed_a1.py
+Usage (from the repository root): python experiments/camelyon_slide_split/per_seed_a1.py
 """
 import sys
 from pathlib import Path

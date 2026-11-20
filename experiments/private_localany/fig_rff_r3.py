@@ -5,7 +5,7 @@ private_localany/key_sizes.json (each profile measured in a fresh process).
 Sources: (a) exact_site_mmd/agreement.csv; (b) outputs/ablation/analysis/q095/ablation_summary.csv;
 (c) outputs/ckks/cost_grid/cost_grid_summary.csv; (d) ciphertext bytes from outputs/ckks/cost_grid/ckks_profiles.csv,
 key bytes from key_sizes.json. Writes fig_rff_tradeoff_r3.pdf into this folder.
-Usage (bundle root): python experiments/private_localany/fig_rff_r3.py
+Usage (from the repository root): python experiments/private_localany/fig_rff_r3.py
 """
 from pathlib import Path
 

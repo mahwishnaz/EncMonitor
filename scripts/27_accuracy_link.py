@@ -13,7 +13,7 @@ Per window and site: accuracy drop = clean accuracy of that site's whole monitor
 the accuracy in the window. A window is "harmful" when at least one site loses >= --harm
 (default 0.05, i.e. 5 percentage points).
 
-Usage (bundle root):
+Usage (from the repository root):
   python scripts/27_accuracy_link.py --dataset mnist   --cache-dir outputs/main/mnist
   python scripts/27_accuracy_link.py --dataset cifar10 --cache-dir outputs/main/cifar10
   (add --checkpoint PATH if the path stored in cache_meta.json has moved)

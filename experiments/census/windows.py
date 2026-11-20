@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Census experiment, step 2 (CPU): pools, RFF sketch, windows and records in the format of scripts 15/33.
 
-Usage (bundle root): python experiments/census/windows.py > experiments/census/windows_log.txt
+Usage (from the repository root): python experiments/census/windows.py > experiments/census/windows_log.txt
   Larger windows: add --window 500 --out records_n500 --only-real (and 1000 / records_n1000)
 """
 from __future__ import annotations

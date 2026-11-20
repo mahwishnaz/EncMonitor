@@ -73,7 +73,7 @@ def build_model(pretrained: bool = False):
     """ResNet-18 for 96x96 patches, 2 classes, ImageNet normalisation inside the model.
 
     forward_features() returns the 512-d penultimate (average-pooled) representation,
-    the layer monitored in the paper; classifier = backbone.fc."""
+    the layer monitored in the article; classifier = backbone.fc."""
     import torch
     import torch.nn as nn
     from torchvision.models import resnet18

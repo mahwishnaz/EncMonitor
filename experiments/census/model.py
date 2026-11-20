@@ -4,7 +4,7 @@
 Writes cache/acs_<year>.npz (per row: state code, household id, raw features, label, representation, model logit)
 and cache/model.pt. Stops if CUDA is unavailable.
 
-Usage (bundle root):
+Usage (from the repository root):
   for i in 1 2 3 4 5 6 7 8; do CUDA_VISIBLE_DEVICES=0 python experiments/census/model.py && break; sleep 15; done
 """
 from __future__ import annotations

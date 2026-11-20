@@ -10,7 +10,7 @@ F. Attribution ranking quality: NDCG and Spearman rank correlation.
 Thresholds are calibrated per dataset and partition seed on the 500 clean
 calibration windows, exactly as in 16_analyze_screening.py.
 
-Usage (bundle root):
+Usage (from the repository root):
   python scripts/25_extra_analyses.py --cache-dirs outputs/main/mnist outputs/main/cifar10 \
       --out-dir outputs/main/analysis/extra_q095
 """
@@ -45,7 +45,7 @@ def score_seed(g: pd.DataFrame, q: float) -> pd.DataFrame:
     out = g[g.condition != "clean_calibration"].copy()
     out["score"] = np.maximum(out.d_mix / t_mix, out.d_site / t_site)
     out["pooled"] = out.d_mix > t_mix
-    out["encmon"] = out.score > 1.0                      # OR rule, as in the paper
+    out["encmon"] = out.score > 1.0                      # OR rule, as in the article
     out["joint"] = out.score > c_joint                   # jointly calibrated OR rule
     out["dual"] = (out.d_site > t_site) | (out.heterogeneity > t_h)
     out["hidden"] = out.dual & ~out.pooled
@@ -137,7 +137,7 @@ def main() -> int:
     f = lambda x: f"{x:.3f}"
     print(f"== Clean held-out windows (q={args.quantile}) ==")
     print(clean.to_string(index=False, float_format=f))
-    print("\n== Table 9 conditions: detection, joint calibration, 2-of-3 delay (windows), ranking ==")
+    print("\n== Best-case conditions (the opposing/mixed condition with the highest hidden-drift rate per family): detection, joint calibration, 2-of-3 delay (windows), ranking ==")
     cols = ["dataset", "condition", "tpr_pooled", "tpr_encmon", "tpr_joint", "delay_pooled", "confirmed_pooled",
             "delay_encmon", "confirmed_encmon", "delay_joint", "confirmed_joint", "ndcg", "spearman"]
     print(t9[cols].to_string(index=False, float_format=f))

@@ -83,7 +83,7 @@ def load_scored(ds: str, q: float = 0.95) -> tuple[pd.DataFrame, dict]:
 
 
 def strat_boot(x: np.ndarray, strata: np.ndarray, reps: int, rng) -> tuple[float, float]:
-    """95% bootstrap over windows stratified by seed (the paper's interval)."""
+    """95% bootstrap over windows stratified by seed (the interval of scripts/16_analyze_screening.py)."""
     groups = [x[strata == s] for s in np.unique(strata)]
     stats = [np.mean(np.concatenate([gr[rng.integers(0, gr.size, gr.size)] for gr in groups])) for _ in range(reps)]
     return float(np.quantile(stats, 0.025)), float(np.quantile(stats, 0.975))

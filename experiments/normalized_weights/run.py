@@ -2,7 +2,7 @@
 """Per-site-normalized EncMonitor on saved records and on regenerated weak-shift windows (one, two and
 all sites).
 
-Usage (bundle root): python experiments/normalized_weights/run.py > experiments/normalized_weights/run_log.txt
+Usage (from the repository root): python experiments/normalized_weights/run.py > experiments/normalized_weights/run_log.txt
 """
 from __future__ import annotations
 
@@ -53,7 +53,7 @@ def records_part() -> pd.DataFrame:
         held = sc[sc.condition == "clean_heldout"]
         cond = sc[sc.condition != "clean_heldout"].groupby(["condition", "family", "geometry"])[RULES].mean().reset_index()
         masks = rc.aggregate_masks(cond)
-        if key == "folktables":   # real-drift family is not part of A1
+        if key == "folktables":   # real-drift family is not part of the non-vector opposing/mixed aggregate
             masks["A1_natural_opposing_mixed"] = cond.family.isin(["label_prior", "age_mix"]) & cond.geometry.isin(rc.OPP_MIX)
             masks["year_all_sites"] = (cond.family == "year") & (cond.geometry == "all")
         masks["best_case_rows"] = cond.condition.isin(set(best[best.dataset == key].condition)) if key != "folktables" else cond.condition == ""

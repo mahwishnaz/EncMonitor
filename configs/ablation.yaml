@@ -55,7 +55,7 @@ axes:
 exact_mmd_for: {sites: 5, window_size: 250, layer: penultimate, bandwidth_multiplier: 1.0, baseline: site, weights: uniform}
 
 # Robustness criterion (is the finding confined to one arbitrary hyperparameter setting?),
-# fixed before results. For each dataset and each hyperparameter axis listed in gate.axes, with the other factors at base:
+# fixed before results. For each dataset and each hyperparameter axis listed in the pass criterion below (axes), with the other factors at base:
 # an axis value "reproduces" the finding if at least one natural cancellation condition has
 # pooled alert rate <= 0.5 and dual (D_site or H) alert rate >= 0.8 at 95% thresholds (the rule of configs/main.yaml).
 # An axis passes if >= 2 of its values reproduce. The criterion is met if every axis passes on both datasets;

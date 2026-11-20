@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Replay the exported windows under CKKS with BV key switching at N = 8192 (fidelity only).
 
-Usage (bundle root): python experiments/ckks_keyswitch/run.py > experiments/ckks_keyswitch/run_log.txt
+Usage (from the repository root): python experiments/ckks_keyswitch/run.py > experiments/ckks_keyswitch/run_log.txt
 """
 from __future__ import annotations
 

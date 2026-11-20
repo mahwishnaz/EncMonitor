@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Per-seed detection and FPR of every method, setting and aggregate, from the records.
 
-Scoring: experiments/private_localany/run.py `score` (Table 1 code, release tag) + matched-FPR alerts
+Scoring: experiments/private_localany/run.py `score` (the scoring code of the main detection table (Table 4 of the article; the same scoring is used for Tables 5-7);
+release tag) + matched-FPR alerts
 (threshold = 95th pct "higher" of the method's score over the seed's own 200 held-out clean windows).
 Detection of an aggregate = mean over its conditions of the per-condition alert rate (equal windows per
 condition, so it equals the pooled window rate). Weak all-site shifts (18 conditions, geometry "all") are not in

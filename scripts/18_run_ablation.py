@@ -87,7 +87,7 @@ def main() -> int:
     ap.add_argument("--dataset", choices=["mnist", "cifar10"], required=True)
     ap.add_argument("--out-dir", default="outputs/ablation/runs")
     ap.add_argument("--seeds", default="")
-    ap.add_argument("--only", default="", help="comma-separated setting ids (debug)")
+    ap.add_argument("--only", default="", help="comma-separated setting ids")
     ap.add_argument("--device", default="cuda")
     ap.add_argument("--force", action="store_true")
     args = ap.parse_args()

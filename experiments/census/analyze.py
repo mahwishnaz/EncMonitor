@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Census experiment, step 3 (CPU): FPR, aggregates, real-drift table and accuracy link at joint calibration.
 
-Usage (bundle root): python experiments/census/analyze.py > experiments/census/analysis_log.txt
+Usage (from the repository root): python experiments/census/analyze.py > experiments/census/analysis_log.txt
 """
 from __future__ import annotations
 
