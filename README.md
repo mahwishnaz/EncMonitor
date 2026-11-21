@@ -246,9 +246,9 @@ from the original runs and have no `RUN_INFO.json`, so no tag is named for them;
 2031-2045 name `revision1-code`.
 
 The data archives written for the article name the former hash `d51e25a` of `revision1-code` (header line of each
-CSV file and `RUN_INFO.json`); no other former hash occurs in them. After the history was cleaned (author and
-committer names, message trailers), the same commits have new hashes; their file contents are identical, and the
-tags are unchanged and point to the same code. The code snapshot of v0.1.0 names the former hashes.
+CSV file and `RUN_INFO.json`); no other former hash occurs in them. The commit history was later rewritten, so the same
+commits now have the hashes below; their file contents are identical, and the
+tags are unchanged and point to the same code.
 
 | Tag | Former hash | Hash |
 |---|---|---|
