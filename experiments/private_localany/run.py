@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Private Local-any and a hybrid vs EncMonitor under the same disclosure policy.
+"""Encrypted Local-any and a hybrid vs EncMonitor under the same disclosure policy.
 
 Detection, FPR, ARL0 and leakage (CPU). The CKKS cost is in ckks.py.
 Usage (from the repository root): python experiments/private_localany/run.py > experiments/private_localany/run_log.txt

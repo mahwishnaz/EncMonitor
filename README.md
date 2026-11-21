@@ -41,10 +41,12 @@ this repository (`scripts/download_data.py`, `experiments/census/download.py`).
 ### Code version
 
 The files belong to the code tag `revision1-code-final`
-(commit `6f2d6bd962fa1285dcc5910b3e00bbab3f59ac53`). The header line of each CSV file and the `RUN_INFO.json` files
-name the tag `revision1-code` (commit `d51e25a71ac4bf588e56b8e2596a34487502fc0c`), with which the runs of seeds
-2031-2045 and the summary tables were produced; seeds 2026-2030 come from the original runs (no `RUN_INFO.json`).
-Between the two tags the experiment code changed only in comments and messages and in the encrypted Local-any
+(commit `6f2d6bd962fa1285dcc5910b3e00bbab3f59ac53`). The per-window runs of seeds 2031-2045 come from the tag
+`revision1-code` (commit `d51e25a71ac4bf588e56b8e2596a34487502fc0c`), which their `RUN_INFO.json` files name; seeds
+2026-2030 come from the original runs (no `RUN_INFO.json`). The summary tables were computed on the `revision1-code`
+checkout (`d51e25a`, as the header line of each CSV file says) with table code committed later: in the tag
+`revision1-code-analysis` (commit `5a54f2fca71c66c7d5582663abfde79ba6fff07c`) and, for the archive scripts, in commit `44449d2`.
+Between `revision1-code` and `revision1-code-final` the experiment code changed only in comments and messages and in the encrypted Local-any
 parameters, which do not enter these files; with `revision1-code-final`, MNIST seed 2026 is reproduced with
 bit-identical window statistics.
 
@@ -232,8 +234,9 @@ the code matches the saved records. What they stand for:
 | Numbers | Tag |
 |---|---|
 | Detection rates, false-positive rates and all other per-window results of the experiments | `revision1-code` |
-| Analysis tables (per-seed tables, paired and matched comparisons, weighted variants, clipping, patient split, falsified residual, streams) | `revision1-code-analysis` |
+| Analysis tables (per-seed tables, paired and matched comparisons, weighted variants, clipping, patient split, falsified residual, streams) | computed on the `revision1-code` checkout (`d51e25a`, as the CSV headers say) with table code committed later in `revision1-code-analysis` (and in commit `44449d2` for the archive scripts) |
 | CKKS cost of encrypted Local-any (alert-count parameters) and the cost projection to S = 5, 10, 20, 50 | `revision1-code-final` |
+| Worked example of Figure 1 (`analysis/worked_example.py`) | `v0.1.1` |
 
 The tag `revision1-code-final` changes only the parameters of the encrypted Local-any alert count
 (`experiments/private_localany/ckks.py`: first modulus 35 bits instead of 30); no detection result depends on them.
@@ -244,4 +247,5 @@ from the original runs and have no `RUN_INFO.json`, so no tag is named for them;
 
 ## Version v0.1.1
 v0.1.1 differs from v0.1.0 only in comments, docstrings, help texts and printed messages, figure titles, the
-worked-example script, requirements.txt and this README; no identifier, key, file name or result changed.
+worked-example script, requirements.txt and this README, and in the version in CITATION.cff and pyproject.toml,
+which is 0.1.1; no identifier, key, file name or result changed.

@@ -12,7 +12,7 @@ authors:
   - family-names: Oh
     given-names: Hyunyoung
     affiliation: "Gachon University"
-version: "0.1.0"
+version: "0.1.1"
 license: MIT
 doi: "10.5281/zenodo.24358726"
 repository-code: "https://github.com/mahwishnaz/EncMonitor"

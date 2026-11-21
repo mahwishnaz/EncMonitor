@@ -79,20 +79,20 @@ def main() -> int:
         r = d["win"][sel[0]]
         S = len(r["contributions"])
         print(f"selected window (first by index with EncMonitor alert and pooled alert silent): {r['window']}")
-        print(f"D_mix/tau_mix = {r['d_mix'] / d['t_mix']:.4f}  D_site/tau_site = {r['d_site'] / d['t_site']:.4f}  "
-              f"score/c = {d['score'][sel[0]] / d['c']:.4f}")
+        print(f"D_mix/tau_mix = {r['d_mix'] / d['t_mix']:.2f}  D_site/tau_site = {r['d_site'] / d['t_site']:.2f}  "
+              f"score/c = {d['score'][sel[0]] / d['c']:.2f}")
         print(f"pooled alert: {bool(r['d_mix'] > d['t_mix'])}  EncMonitor alert: {bool(d['score'][sel[0]] > d['c'])}")
         print("site            " + "  ".join(f"{s:>8d}" for s in range(S)))
         print("shifted         " + "  ".join(f"{str(bool(x)):>8s}" for x in r["shifted_mask"]))
-        print("A_s             " + "  ".join(f"{a:8.6f}" for a in r["contributions"]))
-        print("||delta_s||     " + "  ".join(f"{np.sqrt(e):8.5f}" for e in r["site_energy"]))
+        print("A_s             " + "  ".join(f"{a:8.4f}" for a in r["contributions"]))
+        print("||delta_s||     " + "  ".join(f"{np.sqrt(e):8.3f}" for e in r["site_energy"]))
     n = len(d["win"])
     both = d["encmon"] & ~d["pooled"]
-    print(f"seed {args.seed}, {n} windows: EncMonitor alert rate {d['encmon'].mean():.3f}, pooled alert rate "
-          f"{d['pooled'].mean():.3f}, EncMonitor alert with pooled silent {both.mean():.3f}")
+    print(f"seed {args.seed}, {n} windows: EncMonitor alert rate {d['encmon'].mean():.2f}, pooled alert rate "
+          f"{d['pooled'].mean():.2f}, EncMonitor alert with pooled silent {both.mean():.0%}")
     rates = np.array([[v["encmon"].mean(), v["pooled"].mean(), (v["encmon"] & ~v["pooled"]).mean()] for v in per_seed.values()])
-    print(f"mean over {len(per_seed)} seeds ({min(per_seed)}-{max(per_seed)}): EncMonitor alert rate {rates[:, 0].mean():.3f}, "
-          f"pooled alert rate {rates[:, 1].mean():.3f}, EncMonitor alert with pooled silent {rates[:, 2].mean():.3f}")
+    print(f"mean over {len(per_seed)} seeds ({min(per_seed)}-{max(per_seed)}): EncMonitor alert rate {rates[:, 0].mean():.2f}, "
+          f"pooled alert rate {rates[:, 1].mean():.2f}, EncMonitor alert with pooled silent {rates[:, 2].mean():.0%}")
     return 0
 
 
