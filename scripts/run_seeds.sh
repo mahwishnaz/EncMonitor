@@ -7,12 +7,12 @@
 #   tmux new-session -d -s runs bash scripts/run_seeds.sh   (inside the Python environment of requirements.txt)
 # One log per run in outputs/logs/runs/; start/end/uptime per run in outputs/logs/runs/times.tsv.
 # The script stops unless the checkout it runs in (ENCMONITOR_CODE, default: this repository) is at CODE_REF
-# (default: commit d51e25a, the code of the reported runs). To repeat the reported runs exactly:
-#   git worktree add ../encmonitor-d51e25a d51e25a && ENCMONITOR_CODE=../encmonitor-d51e25a bash scripts/run_seeds.sh
+# (default: commit 6c28439, the code of the reported runs). To repeat the reported runs exactly:
+#   git worktree add ../encmonitor-6c28439 6c28439 && ENCMONITOR_CODE=../encmonitor-6c28439 bash scripts/run_seeds.sh
 # To run with the current checkout instead: CODE_REF=HEAD bash scripts/run_seeds.sh
 set -u
 C=${ENCMONITOR_CODE:-$(cd "$(dirname "$0")/.." && pwd)}
-CODE_REF=${CODE_REF:-d51e25a71ac4bf588e56b8e2596a34487502fc0c}
+CODE_REF=${CODE_REF:-6c2843930fd44e9135e0aae437857e8e3e8c8542}
 O=$C/outputs
 L=$O/logs/runs
 mkdir -p $L

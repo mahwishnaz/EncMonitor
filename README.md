@@ -41,17 +41,17 @@ this repository (`scripts/download_data.py`, `experiments/census/download.py`).
 ### Code version
 
 The files belong to the code tag `revision1-code-final`
-(commit `6f2d6bd962fa1285dcc5910b3e00bbab3f59ac53`). The per-window runs of seeds 2031-2045 come from the tag
-`revision1-code` (commit `d51e25a71ac4bf588e56b8e2596a34487502fc0c`), which their `RUN_INFO.json` files name; seeds
+(commit `0055720a4ba6a3b8c8bf9113c0aaea3589a7376f`). The per-window runs of seeds 2031-2045 come from the tag
+`revision1-code` (commit `6c2843930fd44e9135e0aae437857e8e3e8c8542`), which their `RUN_INFO.json` files name; seeds
 2026-2030 come from the original runs (no `RUN_INFO.json`). The summary tables were computed on the `revision1-code`
-checkout (`d51e25a`, as the header line of each CSV file says) with table code committed later: in the tag
-`revision1-code-analysis` (commit `5a54f2fca71c66c7d5582663abfde79ba6fff07c`) and, for the archive scripts, in commit `44449d2`.
+checkout (`6c28439`; the header line of each CSV file names it by its former hash `d51e25a`, see below) with table code committed later: in the tag
+`revision1-code-analysis` (commit `8426b3bbde99b1649a1936e6d87b4152db504643`) and, for the archive scripts, in commit `907e5b4`.
 Between `revision1-code` and `revision1-code-final` the experiment code changed only in comments and messages and in the encrypted Local-any
 parameters, which do not enter these files; with `revision1-code-final`, MNIST seed 2026 is reproduced with
 bit-identical window statistics.
 
 Two parts of the archive were exported after the runs, with the same code and seeds, by scripts added in commit
-`44449d288b2490b93e6c252e47aeaf912803dd24`; the same commit adds the archive builder and the script of the interval comparison
+`907e5b404fe9a0b260460bf580fbe257b9bc0560`; the same commit adds the archive builder and the script of the interval comparison
 (Supplementary Table S14):
 
 | Script | Writes |
@@ -234,7 +234,7 @@ the code matches the saved records. What they stand for:
 | Numbers | Tag |
 |---|---|
 | Detection rates, false-positive rates and all other per-window results of the experiments | `revision1-code` |
-| Analysis tables (per-seed tables, paired and matched comparisons, weighted variants, clipping, patient split, falsified residual, streams) | computed on the `revision1-code` checkout (`d51e25a`, as the CSV headers say) with table code committed later in `revision1-code-analysis` (and in commit `44449d2` for the archive scripts) |
+| Analysis tables (per-seed tables, paired and matched comparisons, weighted variants, clipping, patient split, falsified residual, streams) | computed on the `revision1-code` checkout (`6c28439`; former hash `d51e25a` in the CSV headers) with table code committed later in `revision1-code-analysis` (and in commit `907e5b4` for the archive scripts) |
 | CKKS cost of encrypted Local-any (alert-count parameters) and the cost projection to S = 5, 10, 20, 50 | `revision1-code-final` |
 | Worked example of Figure 1 (`analysis/worked_example.py`) | `v0.1.1` |
 
@@ -245,7 +245,22 @@ The worked example (`analysis/worked_example.py`) only reads the saved records. 
 from the original runs and have no `RUN_INFO.json`, so no tag is named for them; the `RUN_INFO.json` files of seeds
 2031-2045 name `revision1-code`.
 
+The data archives written for the article name the former hash `d51e25a` of `revision1-code` (header line of each
+CSV file and `RUN_INFO.json`); no other former hash occurs in them. After the history was cleaned (author and
+committer names, message trailers), the same commits have new hashes; their file contents are identical, and the
+tags are unchanged and point to the same code. The code snapshot of v0.1.0 names the former hashes.
+
+| Tag | Former hash | Hash |
+|---|---|---|
+| `revision1-code` | `d51e25a71ac4bf588e56b8e2596a34487502fc0c` | `6c2843930fd44e9135e0aae437857e8e3e8c8542` |
+| `revision1-code-analysis` | `5a54f2fca71c66c7d5582663abfde79ba6fff07c` | `8426b3bbde99b1649a1936e6d87b4152db504643` |
+| `revision1-code-final` | `6f2d6bd962fa1285dcc5910b3e00bbab3f59ac53` | `0055720a4ba6a3b8c8bf9113c0aaea3589a7376f` |
+| (archive scripts) | `44449d288b2490b93e6c252e47aeaf912803dd24` | `907e5b404fe9a0b260460bf580fbe257b9bc0560` |
+| `v0.1.0` | `75d0e2238f39c9c6c64640ff01c3468c60da53f0` | `ad0e712d18eed03d66d490c5c5709b4229010ca4` |
+| (comments and messages) | `e7b6e1d42338f7f7f0658556de2045c740f8dcb2` | `3418fd1de89c3d88c478c66c892ea972c0e21a02` |
+| (version 0.1.1 wording) | `6d1c6a851fb61dad91753b8cdace2fd0991bf5d3` | `c0612f07bc3c53c77bb443d9d14f06030ff141d2` |
+
 ## Version v0.1.1
 v0.1.1 differs from v0.1.0 only in comments, docstrings, help texts and printed messages, figure titles, the
-worked-example script, requirements.txt and this README, and in the version in CITATION.cff and pyproject.toml,
-which is 0.1.1; no identifier, key, file name or result changed.
+worked-example script, requirements.txt and this README, in the version in CITATION.cff and pyproject.toml,
+which is 0.1.1, and in the commit hashes of this README and of scripts/run_seeds.sh (see above); no identifier, key, file name or result changed.
